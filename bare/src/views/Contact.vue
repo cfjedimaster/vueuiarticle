@@ -34,6 +34,10 @@
         <textarea id="comments" v-model="comments"></textarea>
       </p>
 
+      <p>
+        <input type="submit">
+      </p>
+      
     </form>
   </div>
 </template>
