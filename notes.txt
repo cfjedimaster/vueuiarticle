@@ -1,0 +1,57 @@
+
+Things I care about:
+how do I do my page layout?
+how do i handle simple text?
+tables, alt row colors, maybe click to sort?
+
+############################################
+vuebootstrap
+
+https://bootstrap-vue.js.org/
+uses bootstrap 4
+
+Install (npm install vue bootstrap-vue bootstrap)
+
+1) change     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+2)
+(no vue)
+npm install vue bootstrap-vue bootstrap
+
+3) Then, register BootstrapVue in your app entry point:
+app.js should be main.js
+
+4) this failed: 
+// app.js
+import './custom.scss'
+failed cuz of OR, so minor doc bug
+https://github.com/bootstrap-vue/bootstrap-vue/issues/4859
+
+5) missed this - https://bootstrap-vue.js.org/docs#vue-cli-3-plugin
+
+Issue with margins
+
+i added navbar first, with active class
+
+i added hero
+i added padding to navbar
+https://bootstrap-vue.js.org/docs/reference/spacing-classes for spacing
+
+i sometimes used B docs versus BV docs
+
+auto grow form failed
+
+############################################
+vuetify
+https://vuetifyjs.com/en/getting-started/quick-start
+https://github.com/vuetifyjs/vuetify-vscode
+
+they did cli install first
+it wiped App.vue
+but it did add a nice layout with title, just no router-viewport
+
+tables are bad ass
+pagination, filtering
+
+selection controls for checkboxes
