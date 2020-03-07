@@ -2,12 +2,6 @@
   <div>
     <h1>Pictures of Our Cats</h1>
     
-    <!--
-    <div class="d-flex justify-content-center flex-wrap">
-      <img v-for="(cat, idx) of cats" :src="cat" :key="idx" class="img-thumbnail img-fluid m-4" />
-    </div>
-    -->
-
     <b-container>
       <b-row align-v="center" align-h="center">
         <b-col cols="4" v-for="(cat, idx) of cats" :key="idx">
