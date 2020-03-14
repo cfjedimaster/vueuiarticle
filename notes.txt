@@ -55,3 +55,10 @@ tables are bad ass
 pagination, filtering
 
 selection controls for checkboxes
+issue with checkbox-group, https://github.com/vuetifyjs/vuetify/issues/5467
+
+############################################
+quasar
+https://quasar.dev/start/pick-quasar-flavour
+
+cli install had lots of options
