@@ -572,3 +572,5 @@ Note that compared to the BootstrapVue version it seems a lot simpler, you get y
 ![Vuetify form](img/vt4.png)
 
 I felt like I was close to getting the checkbox group right, but eventually gave up. Oddly, they have a [radio group](https://vuetifyjs.com/en/components/selection-controls/) control that does exactly what I want... but only for radio controls, not checkboxes. 
+
+You can demo this version here: <https://vuetify.now.sh/>
