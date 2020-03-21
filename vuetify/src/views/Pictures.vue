@@ -3,7 +3,6 @@
 
     <h1>Pictures of our Cats</h1>
 
-
       <v-container fluid>
           <v-row>
             <v-col v-for="(cat, idx) of cats" cols="4" :key="idx">

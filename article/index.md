@@ -192,7 +192,7 @@ Alright, now that you've seen as bad as it can get, let's try to make it better!
 ![BootstrapVue Home page](img/bootstrapvue.png)
 ### BootstrapVue
 
-The first project I'll look at is BootstrapVue. Note that is definitely BootstrapVue, not VueBootstrap. I know for a fact I've called it that in the past, and I even named my application `vuebootstrap`, but that's just me being slow. 
+The first project I'll look at is [BootstrapVue](https://bootstrap-vue.js.org/). Note that is definitely BootstrapVue, not VueBootstrap. I know for a fact I've called it that in the past, and I even named my application `vuebootstrap`, but that's just me being slow. 
 
 BootstrapVue is probably the first Vue UI project I ever used. I've been using [Bootstrap](https://getbootstrap.com/) for *years* now so I'm already familiar with it. It's also my "go to" example of why Vue components kick butt. 
 
@@ -403,8 +403,172 @@ Finally, let's look at the contact form:
 </template>
 ```
 
-This had the most intensive change with every bit of the form changing to a component. Groups are used for labelling and layout. The result is a nicer form, but perhaps not as dramatic of a change:
+This had the most intensive change with every bit of the form changing to a component. Groups are used for labelling and layout. Note how the select becomes much simpler. The result is a nicer form, but perhaps not as dramatic of a change:
 
 ![Contact form](img/bv4.png)
 
-All in all, BootstrapVue was a fairly simple to use library and made for a nice update I think. You can demo this version here: 
+One cool aspect you may not see until you test is that textarea will grow as you type, to a max of ten rows (as specified in my code).
+
+All in all, BootstrapVue was a fairly simple to use library and made for a nice update I think. You can demo this version here: <https://vuebootstrap.now.sh/>
+
+![Vuetify homepage](img/vt0.png)
+
+### Vuetify
+
+Next up is [Vuetify](https://vuetifyjs.com/en/), a "material design" UI framework that I've also had some previous experience with. Material design, first created and promoted by Google, has become a rather familiar clean look that is - I suppose - a bit "skinnier" than Bootstrap. "Skinnier" isn't the best description of it but as I said, I'm a developer. 
+
+So as before, I started with my bare application and per the [Getting Started](https://vuetifyjs.com/en/getting-started/quick-start/) docs, I installed via the Vue CLI. This worked great, but warned me about files not committed to source. Being the smart developer I am, I said, hey, it's all good, don't worry about it. And bam, it wiped out my application. Well, technically it wiped out my App.vue. It didn't touch my page views. Nothing was really lost of course, but I'll note that it was *not* as friendly as the BootstrapVue CLI plugin. 
+
+As before, I began with the main layout and App.vue:
+
+```html
+<template>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+
+      <v-toolbar-title>UI Demo</v-toolbar-title>
+
+      <template v-slot:extension>
+        <v-tabs align-with-title>
+          <v-tab to="/">Home</v-tab>
+          <v-tab to="/cats">Cats</v-tab>
+          <v-tab to="/pics">Pictures</v-tab>
+          <v-tab to="/contact">Contact</v-tab>
+        </v-tabs>
+      </template>
+    </v-app-bar>
+
+    <v-content class="ma-5">
+      <router-view/>
+    </v-content>
+  </v-app>
+</template>
+```
+
+The primary wrapper for a Vuetify site is the `v-app` component. I then defined a toolbar and set of tabs for the top level navigation. Note that I have no code to signify what the current tab is - Vuetify handled that out of the box. I'm going to skip showing the code for the first view as I left it completely alone. Nothing in Veutify "stuck out" to me like the Jumbotron did in Bootstrap. Here's how it renders:
+
+![Vuetify version - main page](img/vt1.png)
+
+Now let's look at update to the cat table:
+
+```html
+<template>
+  <div>
+    <h1>Our Cats</h1>
+    <p>
+      Here is our current list of cats.
+    </p>
+
+    <v-data-table :headers="headers" :items="cats">
+    </v-data-table>
+  </div>
+</template>
+
+<script>
+
+// https://stackoverflow.com/a/1527820/52160
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export default {
+  data() {
+    return {
+      headers: [
+        { text:'Name', value:'name' },
+        { text:'Gender', value:'gender' },
+        { text:'Age', value:'age' }
+      ],
+      cats: [
+        {name:"Fluffy Pants", gender:"male", age: getRandomInt(0,10)},
+        {name:"Cracker", gender:"male", age: getRandomInt(0,10)},
+        {name:"Luna", gender:"female", age: getRandomInt(0,10)},
+        {name:"Pig", gender:"female", age: getRandomInt(0,10)},
+        {name:"Elise", gender:"female", age: getRandomInt(0,10)},
+        {name:"Sammy", gender:"male", age: getRandomInt(0,10)},
+        {name:"King Fred", gender:"male", age: getRandomInt(0,10)},
+        {name:"Queenie", gender:"female", age: getRandomInt(0,10)},
+        {name:"Serendipity", gender:"fmale", age: getRandomInt(0,10)},
+        {name:"Lilith", gender:"female", age: getRandomInt(0,10)},
+      ]
+    }
+  }
+}
+</script>
+```
+
+Once again the UI framework lets me take my table code and *greatly* simplify it. I did have to add a bit more data in order to define the headers for my columns. Out of the box then and with no other changes, I get sorting baked in:
+
+![Cat table](img/vt2.png)
+
+Check the Vuetify [Table](https://vuetifyjs.com/en/components/data-tables/) component docs for more examples, including the ability to add searching and pagination.
+
+Now let's look at our cat picture page:
+
+```html
+<template>
+  <div>
+
+    <h1>Pictures of our Cats</h1>
+
+      <v-container fluid>
+          <v-row>
+            <v-col v-for="(cat, idx) of cats" cols="4" :key="idx">
+              <v-img :src="cat" height="300" max-height="350" />
+            </v-col>
+          </v-row>
+      </v-container>
+  </div>
+</template>
+```
+
+Once again I'm using a grid system as well as a specific image component. This time lazy-loading is built in so I don't have to specify another component or argument, it's just there. It also rendered really darn well:
+
+![Cat images](img/vt3.png)
+
+It's a bit hard to see in this screen shot, but all the images line up nicely. There's some cropping going on, but you could link these images to a full screen or modal version if you want. All I know is that it looks really nice!
+
+Now let's look at the contact form:
+
+```html
+<template>
+  <div>
+    <h1>Contact Us</h1>
+    <p>
+      We care a lot about what you think. Seriously. All day long I wonder - what is that random person
+      on the Internet thinking about my site? So please fill the form out below so I can give your comments
+      the attention they deserve!
+    </p>
+
+    <v-form>
+
+      <v-text-field v-model="name" label="Your Name:" required />
+
+      <v-text-field v-model="email" label="Your Email:" required type="email" />
+
+      <v-select v-model="favmovie" :items="movies" label="Favorite Movie:" />
+
+      <div>On my pizza I add:</div>
+      <v-checkbox v-model="favPizzaIngredients" v-for="(ingredient,idx) of pizzaIngredients" 
+      :key="idx" :label="ingredient" :value="ingredient" />
+
+      <v-textarea v-model="comments" label="Your Comments:" outlined auto-grow="true" />
+
+      <v-btn color="primary">Submit</v-btn>   
+
+    </v-form>
+  </div>
+</template>
+```
+
+Note that compared to the BootstrapVue version it seems a lot simpler, you get your field and label in one component. It all went fine until I got to the checkbox. There wasn't (that I could find) a nice way to add a label to set of checkboxes in a way that meshed nice with the rest of the UI. I got it working, but it really stands out I think - in a bad way. Here's how it looks:
+
+![Vuetify form](img/vt4.png)
+
+I felt like I was close to getting the checkbox group right, but eventually gave up. Oddly, they have a [radio group](https://vuetifyjs.com/en/components/selection-controls/) control that does exactly what I want... but only for radio controls, not checkboxes. 

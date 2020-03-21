@@ -6,22 +6,6 @@
     </p>
 
     <v-data-table :headers="headers" :items="cats">
-      <!--
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Gender</th>
-          <th>Age</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(cat,idx) in cats" :key="idx">
-          <td>{{cat.name}}</td>
-          <td>{{cat.gender}}</td>
-          <td>{{cat.age}}</td>
-        </tr>
-      </tbody>
-      -->
     </v-data-table>
   </div>
 </template>
