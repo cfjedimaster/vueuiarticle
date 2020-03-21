@@ -574,3 +574,180 @@ Note that compared to the BootstrapVue version it seems a lot simpler, you get y
 I felt like I was close to getting the checkbox group right, but eventually gave up. Oddly, they have a [radio group](https://vuetifyjs.com/en/components/selection-controls/) control that does exactly what I want... but only for radio controls, not checkboxes. 
 
 You can demo this version here: <https://vuetify.now.sh/>
+
+![Quasar homepage](img/q0.png)
+
+### Quasar
+
+For my third and final UI framework, I took a look at [Quasar](https://quasar.dev/), the first framework in this article that I had never looked at before. I thought it was going to be the most difficult to use (just because I wasn't familiar with it), but I was surprised to find it rather easy to use. 
+
+There's multiple installation options, but I used the [Vue CLI plugin](https://quasar.dev/start/vue-cli-plugin#Add-Vue-CLI-Quasar-Plugin). It had a *lot* of options and for the most part I just took the defaults. 
+
+Let's first look at the App.vue component:
+
+```html
+<template>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated class="glossy">
+      <q-toolbar>
+
+        <q-toolbar-title>
+          UI Demo
+        </q-toolbar-title>
+
+        <q-tabs>
+          <q-route-tab to="/" label="Home" />
+          <q-route-tab to="/cats" label="Cats"  />
+          <q-route-tab to="/pics" label="Pictures" />
+          <q-route-tab to="/contact" label="Contact" />
+        </q-tabs>
+
+      </q-toolbar>
+    </q-header>
+   
+    <q-page-container class="q-pa-md">
+      <router-view></router-view>
+    </q-page-container>
+  </q-layout>
+</template>
+```
+
+Pretty simple for the most part, but I got to say the shorthand that all these UI frameworks use tend to confuse the heck out of me. I mean, I bet everything above makes perfect sense except for this: `view="lHh Lpr lFf"` Quasar is definitely not alone in this, and you definitely want a nice shorthand for margins, padding, and so forth, but it's probably my least favorite aspect of using UI frameworks. 
+
+As with Vuetify, I'm going for a top bar with tabs, and again I do not need to add anything to have the current tab marked as active. Again, like Vuetify, I didn't do anything to the homepage. Here's how it looks:
+
+![Quasar, first page](img/q1.png)
+
+Next I worked on the cats table:
+
+```html
+<template>
+  <div>
+    <h3>Our Cats</h3>
+    <p>
+      Here is our current list of cats.
+    </p>
+
+    <q-table :data="cats" :columns="columns" row-key="name">
+    </q-table>
+  </div>
+</template>
+
+<script>
+
+// https://stackoverflow.com/a/1527820/52160
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export default {
+  data() {
+    return {
+      cats: [
+        {name:"Fluffy Pants", gender:"male", age: getRandomInt(0,10)},
+        {name:"Cracker", gender:"male", age: getRandomInt(0,10)},
+        {name:"Luna", gender:"female", age: getRandomInt(0,10)},
+        {name:"Pig", gender:"female", age: getRandomInt(0,10)},
+        {name:"Elise", gender:"female", age: getRandomInt(0,10)},
+        {name:"Sammy", gender:"male", age: getRandomInt(0,10)},
+        {name:"King Fred", gender:"male", age: getRandomInt(0,10)},
+        {name:"Queenie", gender:"female", age: getRandomInt(0,10)},
+        {name:"Serendipity", gender:"fmale", age: getRandomInt(0,10)},
+        {name:"Lilith", gender:"female", age: getRandomInt(0,10)},
+      ],
+      columns:[
+        { align: "left", headerStyle: "font-weight: bold", sortable: true, name: "name", field: "name", label: "Name" },
+        { headerStyle: "font-weight: bold", sortable: true, name: "gender", field: "gender", label: "Gender" },
+        { headerStyle: "font-weight: bold", sortable: true, name: "age", field: "age", label: "Age" }
+      ]
+    }
+  }
+}
+</script>
+```
+
+As with both previous examples, you get a nice table component that simplifies displaying data. I felt like I had to write a bit more JavaScript to get the columns setup and to enable sorting. Also, it was a bit weird that I couldn't define a header style once. But the result is nice:
+
+![Quasar cat table](img/qt2.png)
+
+Notice that pagination is on by default with a table size of five rows. You can configure all of that to your liking. There's a heck of a lot more you can do so check the [docs](https://quasar.dev/vue-components/table) for examples. 
+
+Now let's look at the image gallery page.
+
+```html
+<template>
+  <div>
+    <h3>Pictures of our Cats</h3>
+
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <q-carousel animated arrows navigation v-model="slide" class="q-ma-lg">
+        <q-carousel-slide v-for="(cat, idx) of cats" :img-src="cat" :key="idx" :name="idx" />
+        </q-carousel>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+</template>
+```
+
+I did something cool for this one - I used their [image carousel](https://quasar.dev/vue-components/carousel) component. It looks like so:
+
+![Quasar image carousel](img/qt3.png)
+
+In general it was easy to use, but I had trouble with it because I didn't use `v-model="slide"`. You see, I didn't care what slide was shown so I just skipped the argument. This made the component refuse to work correctly. Maybe this was documented but if so, I missed it. Outside of that I love the result. 
+
+Now for the contact form:
+
+```html
+<template>
+  <div>
+    <h3>Contact Us</h3>
+    <p>
+      We care a lot about what you think. Seriously. All day long I wonder - what is that random person
+      on the Internet thinking about my site? So please fill the form out below so I can give your comments
+      the attention they deserve!
+    </p>
+
+    <q-form>
+
+      <q-input v-model="name" label="Your Name:" />
+
+      <q-input v-model="email" label="Your Email:" />
+
+      <q-select v-model="favmovie" :options="movies" label="Favorite Movie" />
+
+      <div class="q-mt-lg">
+        On my pizza I add:
+        <q-option-group
+          v-model="favPizzaIngredients"
+          :options="pizzaIngredients"
+          type="checkbox"
+        />
+      </div>
+
+      <q-input label="Your Comments:" v-model="comments" type="textarea"/>
+
+      <div class="q-mt-lg">
+        <q-btn color="primary" label="Submit" />
+      </div>
+      
+    </q-form>
+  </div>
+</template>
+```
+
+As with Vuetify, I liked the simpler components they supported that wrapped up the label and field and one. But also like Vuetify, I had trouble coming up with a good checkbox layout. I feel like (for both) I'm missing something obvious so it's probably my fault. All in all the end result was... ok. I mean it looked nice but I didn't care for it. In other words - yes the form looked nicer but I didn't care for it myself.
+
+![Quasar contact form](img/vt4.png)
+
+But to be clear, my dislike for the form would *not* have been enough for me to stop using the framework. 
+
+You can play with this version here: <https://quasar-sigma.now.sh/>
+
+### Wrap Up
+
+I hope you've enjoyed this quick little tour over a few of the options you have available to you as a Vue.js developer. I'd love to hear from people about what frameworks they're using, especially if they have "before and after" comparisons they can share. Don't forget you can get the complete source code for everything I showed here: <https://github.com/cfjedimaster/vueuiarticle>
