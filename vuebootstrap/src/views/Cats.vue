@@ -5,22 +5,7 @@
       Here is our current list of cats.
     </p>
 
-    <table class="table table-striped table-bordered">
-      <thead class="thead-dark">
-        <tr>
-          <th>Name</th>
-          <th>Gender</th>
-          <th>Age</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(cat,idx) in cats" :key="idx">
-          <td>{{cat.name}}</td>
-          <td>{{cat.gender}}</td>
-          <td>{{cat.age}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <b-table striped head-variant="dark" :items="cats"></b-table>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
     <b-container>
       <b-row align-v="center" align-h="center">
         <b-col cols="4" v-for="(cat, idx) of cats" :key="idx">
-          <img :src="cat" class="img-thumbnail img-fluid m-4" />
+          <b-img-lazy :src="cat" class="img-thumbnail img-fluid m-4" blank="true" offset="1" />
         </b-col>
       </b-row>
     </b-container>
